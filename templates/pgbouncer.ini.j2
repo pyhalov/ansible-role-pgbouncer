@@ -157,7 +157,7 @@ log_disconnections = {{ pgbouncer_log_disconnections | default(1) }}
 ;server_idle_timeout = 60
 
 ;; Cancel connection attempt if server does not answer takes longer.
-;server_connect_timeout = 15
+server_connect_timeout = {{ pgbouncer_server_connect_timeout | default (15) }}
 
 ;; If server login failed (server_connect_timeout or auth failure)
 ;; then wait this many second.
