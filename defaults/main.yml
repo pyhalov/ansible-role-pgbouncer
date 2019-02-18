@@ -48,3 +48,5 @@ pgbouncer_databases: []
 #pgbouncer_default_pool_size: 20
 # listen port
 #pgbouncer_listen_port: 5432
+
+pgbouncer_ulimit_nfiles: 65535

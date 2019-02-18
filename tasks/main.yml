@@ -20,5 +20,14 @@
     owner: postgres
     group: postgres
     mode: 0640
-  with_fileglob: templates/*
+  with_fileglob: templates/*.j2
+  notify: "{{ pgbouncer_service_state }} pgbouncer"
+
+- name: template default file
+  template:
+    src: "pgbouncer"
+    dest: /etc/default/pgbouncer
+    owner: root
+    group: root
+    mode: 0644
   notify: "{{ pgbouncer_service_state }} pgbouncer"
