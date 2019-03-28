@@ -3,12 +3,15 @@
 # connections but its too hard to dynamically decide if
 - name: reload pgbouncer
   service:
-    name: pgbouncer
+    name: "{{pgbouncer_name}}"
     state: reloaded
 
 # this is left in here so a playbook can still use if changing stuff that
 # requires a complete restart
 - name: restart pgbouncer
   service:
-    name: pgbouncer
+    name: "{{pgbouncer_name}}"
     state: restarted
+
+- name: reload systemd
+  command: systemctl daemon-reload

@@ -10,6 +10,8 @@ pgbouncer_install_psql: false
 # possible values: `restart` or `reload` (see handlers)
 pgbouncer_service_state: reload
 
+pgbouncer_name: "pgbouncer"
+
 # array of username and password for the auth_file
 # any valid pgbouncer value is allowed (eg md5 hash)
 # eg:

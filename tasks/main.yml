@@ -12,10 +12,29 @@
     state: present
   when: pgbouncer_install_psql
 
+- name: create pgbouncer service
+  template:
+    src: "pgbouncer_init"
+    dest: /etc/init.d/{{pgbouncer_name}}
+    owner: root
+    group: root
+    mode: 0755
+  notify: "reload systemd"
+
+- meta: flush_handlers
+
+- name: Ensure config directory exists
+  file:
+    path: "/etc/{{pgbouncer_name}}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
 - name: template config files
   template:
     src: "{{ item }}"
-    dest: /etc/pgbouncer/{{ item | basename | splitext | first }}
+    dest: /etc/{{pgbouncer_name}}/{{ item | basename | splitext | first }}
     backup: yes
     owner: postgres
     group: postgres
@@ -31,3 +50,10 @@
     group: root
     mode: 0644
   notify: "{{ pgbouncer_service_state }} pgbouncer"
+
+- name: Ensure that pgbouncer is running
+  service:
+    name: "{{ pgbouncer_name }}"
+    state: "started"
+    enabled: yes
+
